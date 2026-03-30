@@ -169,7 +169,11 @@ cd ..
 cd api-gateway
 npm install
 cd ..
+
+npm install
 ```
+
+The final `npm install` at the root installs `concurrently`, which is used to start all services with one command.
 
 ## How to Run Each Service
 
@@ -223,6 +227,24 @@ npm start
 cd bookstore-microservices\api-gateway
 npm start
 ```
+
+## Run All Services With One Command
+
+From the `bookstore-microservices` root folder:
+
+```powershell
+npm run dev
+```
+
+This starts:
+
+- User Service on `5001`
+- Book Service on `5002`
+- Order Service on `5003`
+- Payment Service on `5004`
+- Review Service on `5005`
+- Notification Service on `5006`
+- API Gateway on `5000`
 
 ## How to Test Each Service Directly
 
