@@ -6,8 +6,6 @@ const swaggerUi = require("swagger-ui-express");
 const app = express();
 const PORT = 5000;
 
-app.use(express.json());
-
 const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
@@ -63,6 +61,19 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *     tags:
  *       - Users
  *     summary: Create a user through the API Gateway
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Nimal Silva
+ *               email:
+ *                 type: string
+ *                 example: nimal@example.com
  *     responses:
  *       201:
  *         description: User created
@@ -94,6 +105,22 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *     tags:
  *       - Books
  *     summary: Create a book through the API Gateway
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: Domain-Driven Design
+ *               author:
+ *                 type: string
+ *                 example: Eric Evans
+ *               price:
+ *                 type: number
+ *                 example: 6000
  *     responses:
  *       201:
  *         description: Book created
@@ -125,6 +152,25 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *     tags:
  *       - Orders
  *     summary: Create an order through the API Gateway
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *                 example: 1
+ *               bookId:
+ *                 type: integer
+ *                 example: 2
+ *               quantity:
+ *                 type: integer
+ *                 example: 1
+ *               status:
+ *                 type: string
+ *                 example: Placed
  *     responses:
  *       201:
  *         description: Order created
@@ -156,6 +202,25 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *     tags:
  *       - Payments
  *     summary: Create a payment through the API Gateway
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               orderId:
+ *                 type: integer
+ *                 example: 1
+ *               amount:
+ *                 type: number
+ *                 example: 5200
+ *               method:
+ *                 type: string
+ *                 example: Card
+ *               status:
+ *                 type: string
+ *                 example: Paid
  *     responses:
  *       201:
  *         description: Payment created
@@ -187,6 +252,25 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *     tags:
  *       - Reviews
  *     summary: Create a review through the API Gateway
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               bookId:
+ *                 type: integer
+ *                 example: 1
+ *               userId:
+ *                 type: integer
+ *                 example: 2
+ *               rating:
+ *                 type: integer
+ *                 example: 5
+ *               comment:
+ *                 type: string
+ *                 example: Excellent book
  *     responses:
  *       201:
  *         description: Review created
@@ -218,6 +302,22 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *     tags:
  *       - Notifications
  *     summary: Create a notification through the API Gateway
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *                 example: 1
+ *               message:
+ *                 type: string
+ *                 example: Your order is confirmed
+ *               type:
+ *                 type: string
+ *                 example: Order
  *     responses:
  *       201:
  *         description: Notification created
