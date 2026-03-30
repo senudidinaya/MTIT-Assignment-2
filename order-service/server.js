@@ -71,6 +71,47 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *         description: A single order
  *       404:
  *         description: Order not found
+ *   put:
+ *     summary: Update an order by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *               bookId:
+ *                 type: integer
+ *               quantity:
+ *                 type: integer
+ *               status:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Order updated
+ *       404:
+ *         description: Order not found
+ *   delete:
+ *     summary: Delete an order by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Order deleted
+ *       404:
+ *         description: Order not found
  */
 app.get("/orders", (req, res) => {
   res.json(orders);
@@ -99,6 +140,34 @@ app.post("/orders", (req, res) => {
 
   orders.push(newOrder);
   res.status(201).json(newOrder);
+});
+
+app.put("/orders/:id", (req, res) => {
+  const order = orders.find((item) => item.id === Number(req.params.id));
+
+  if (!order) {
+    return res.status(404).json({ message: "Order not found" });
+  }
+
+  const { userId, bookId, quantity, status } = req.body;
+
+  order.userId = userId !== undefined ? userId : order.userId;
+  order.bookId = bookId !== undefined ? bookId : order.bookId;
+  order.quantity = quantity !== undefined ? quantity : order.quantity;
+  order.status = status !== undefined ? status : order.status;
+
+  res.json(order);
+});
+
+app.delete("/orders/:id", (req, res) => {
+  const orderIndex = orders.findIndex((item) => item.id === Number(req.params.id));
+
+  if (orderIndex === -1) {
+    return res.status(404).json({ message: "Order not found" });
+  }
+
+  const deletedOrder = orders.splice(orderIndex, 1);
+  res.json({ message: "Order deleted", order: deletedOrder[0] });
 });
 
 app.get("/", (req, res) => {
