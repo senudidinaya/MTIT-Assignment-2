@@ -4,7 +4,24 @@
   "private": true,
   "description": "Root runner for the Bookstore Microservices Backend assignment",
   "scripts": {
-    "dev": "concurrently \"npm start --prefix user-service\" \"npm start --prefix book-service\" \"npm start --prefix order-service\" \"npm start --prefix payment-service\" \"npm start --prefix review-service\" \"npm start --prefix notification-service\" \"npm start --prefix api-gateway\""
+    "start": "npm run start:all",
+    "start:all": "concurrently --names user,book,order,payment,review,notification,gateway \"npm start --prefix user-service\" \"npm start --prefix book-service\" \"npm start --prefix order-service\" \"npm start --prefix payment-service\" \"npm start --prefix review-service\" \"npm start --prefix notification-service\" \"npm start --prefix api-gateway\"",
+    "prestart:all": "node scripts/free-ports.js 5000 5001 5002 5003 5004 5005 5006",
+    "start:user": "npm start --prefix user-service",
+    "prestart:user": "node scripts/free-ports.js 5001",
+    "start:book": "npm start --prefix book-service",
+    "prestart:book": "node scripts/free-ports.js 5002",
+    "start:order": "npm start --prefix order-service",
+    "prestart:order": "node scripts/free-ports.js 5003",
+    "start:payment": "npm start --prefix payment-service",
+    "prestart:payment": "node scripts/free-ports.js 5004",
+    "start:review": "npm start --prefix review-service",
+    "prestart:review": "node scripts/free-ports.js 5005",
+    "start:notification": "npm start --prefix notification-service",
+    "prestart:notification": "node scripts/free-ports.js 5006",
+    "start:gateway": "npm start --prefix api-gateway",
+    "prestart:gateway": "node scripts/free-ports.js 5000",
+    "dev": "npm run start:all"
   },
   "dependencies": {
     "concurrently": "^9.2.1"

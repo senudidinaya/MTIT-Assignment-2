@@ -8,7 +8,7 @@ const PORT = 5001;
 app.use(express.json());
 
 // In-memory sample data for the assignment.
-const users = [
+let users = [
   { id: 1, name: "Alice Fernando", email: "alice@example.com" },
   { id: 2, name: "Brian Perera", email: "brian@example.com" }
 ];
@@ -67,6 +67,43 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *         description: A single user
  *       404:
  *         description: User not found
+ *   put:
+ *     summary: Update a user by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User updated
+ *       404:
+ *         description: User not found
+ *   delete:
+ *     summary: Delete a user by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: User deleted
+ *       404:
+ *         description: User not found
  */
 app.get("/users", (req, res) => {
   res.json(users);
@@ -93,6 +130,40 @@ app.post("/users", (req, res) => {
 
   users.push(newUser);
   res.status(201).json(newUser);
+});
+
+app.put("/users/:id", (req, res) => {
+  const index = users.findIndex((item) => item.id === Number(req.params.id));
+
+  if (index === -1) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const { name, email } = req.body;
+
+  users[index] = {
+    ...users[index],
+    ...(name !== undefined ? { name } : {}),
+    ...(email !== undefined ? { email } : {})
+  };
+
+  res.json(users[index]);
+});
+
+app.delete("/users/:id", (req, res) => {
+  const index = users.findIndex((item) => item.id === Number(req.params.id));
+
+  if (index === -1) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const deletedUser = users[index];
+  users.splice(index, 1);
+
+  res.json({
+    message: "User deleted successfully",
+    user: deletedUser
+  });
 });
 
 app.get("/", (req, res) => {

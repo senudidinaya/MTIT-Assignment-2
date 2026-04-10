@@ -92,6 +92,51 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *     responses:
  *       200:
  *         description: Single user
+ *       404:
+ *         description: User not found
+ *   put:
+ *     tags:
+ *       - Users
+ *     summary: Update a user by ID through the API Gateway
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Nimal Silva
+ *               email:
+ *                 type: string
+ *                 example: nimal.updated@example.com
+ *     responses:
+ *       200:
+ *         description: User updated
+ *       404:
+ *         description: User not found
+ *   delete:
+ *     tags:
+ *       - Users
+ *     summary: Delete a user by ID through the API Gateway
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: User deleted
+ *       404:
+ *         description: User not found
  *
  * /api/books:
  *   get:
@@ -189,6 +234,57 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *     responses:
  *       200:
  *         description: Single order
+ *       404:
+ *         description: Order not found
+ *   put:
+ *     tags:
+ *       - Orders
+ *     summary: Update an order by ID through the API Gateway
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *                 example: 1
+ *               bookId:
+ *                 type: integer
+ *                 example: 2
+ *               quantity:
+ *                 type: integer
+ *                 example: 1
+ *               status:
+ *                 type: string
+ *                 example: Processing
+ *     responses:
+ *       200:
+ *         description: Order updated
+ *       404:
+ *         description: Order not found
+ *   delete:
+ *     tags:
+ *       - Orders
+ *     summary: Delete an order by ID through the API Gateway
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Order deleted
+ *       404:
+ *         description: Order not found
  *
  * /api/payments:
  *   get:
@@ -239,6 +335,38 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *     responses:
  *       200:
  *         description: Single payment
+ *       404:
+ *         description: Payment not found
+ *   put:
+ *     tags:
+ *       - Payments
+ *     summary: Update payment status through the API Gateway
+ *     description: Only the payment status can be updated after creation.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - status
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 example: Refunded
+ *     responses:
+ *       200:
+ *         description: Payment status updated successfully
+ *       400:
+ *         description: Invalid status value
+ *       404:
+ *         description: Payment not found
  *
  * /api/reviews:
  *   get:
@@ -289,6 +417,68 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
  *     responses:
  *       200:
  *         description: Single review
+ *       404:
+ *         description: Review not found
+ *   put:
+ *     tags:
+ *       - Reviews
+ *     summary: Update a review by ID through the API Gateway
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               rating:
+ *                 type: integer
+ *                 example: 4
+ *               comment:
+ *                 type: string
+ *                 example: Updated my review after re-reading
+ *     responses:
+ *       200:
+ *         description: Review updated successfully
+ *       404:
+ *         description: Review not found
+ *   delete:
+ *     tags:
+ *       - Reviews
+ *     summary: Delete a review by ID through the API Gateway
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Review deleted successfully
+ *       404:
+ *         description: Review not found
+ *
+ * /api/reviews/book/{bookId}:
+ *   get:
+ *     tags:
+ *       - Reviews
+ *     summary: Get all reviews for a specific book through the API Gateway
+ *     parameters:
+ *       - in: path
+ *         name: bookId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: List of reviews for the book
+ *       404:
+ *         description: No reviews found for this book
  *
  * /api/notifications:
  *   get:

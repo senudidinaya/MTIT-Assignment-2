@@ -228,13 +228,39 @@ cd bookstore-microservices\api-gateway
 npm start
 ```
 
+## Run One Service From The Root Folder
+
+From the `bookstore-microservices` root folder, you can start any individual service without changing directories:
+
+```powershell
+npm run start:user
+npm run start:book
+npm run start:order
+npm run start:payment
+npm run start:review
+npm run start:notification
+npm run start:gateway
+```
+
+Each root command first frees the service's fixed port, so restarting from the root will not fail with `EADDRINUSE` if an older copy of that same service is still running.
+
 ## Run All Services With One Command
 
 From the `bookstore-microservices` root folder:
 
 ```powershell
-npm run dev
+npm start
 ```
+
+You can also use:
+
+```powershell
+npm run start:all
+```
+
+`npm run dev` still points to the same all-services command.
+
+This command also frees ports `5000` to `5006` before launching the services, so it can be re-run without manually stopping old service processes first.
 
 This starts:
 
